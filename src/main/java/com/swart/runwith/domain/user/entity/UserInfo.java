@@ -26,8 +26,6 @@ public class UserInfo {
     @Column
     String introduction;
     @Column
-    String backgroundImageUrl;
-    @Column
     String profileImageUrl;
     @Column(nullable = false)
     Gender gender;
@@ -37,20 +35,13 @@ public class UserInfo {
     float weight;
 
     @Builder
-
     public UserInfo(
         final String name,
-        final String introduction,
-        final String backgroundImageUrl,
-        final String profileImageUrl,
         final Gender gender,
         final float height,
         final float weight
     ) {
         this.name = name;
-        this.introduction = introduction;
-        this.backgroundImageUrl = backgroundImageUrl;
-        this.profileImageUrl = profileImageUrl;
         this.gender = gender;
         this.height = height;
         this.weight = weight;
