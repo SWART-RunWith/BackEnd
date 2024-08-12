@@ -5,6 +5,8 @@ import com.swart.runwith.sample.test.dto.service.request.TestUpdateServiceReques
 import com.swart.runwith.sample.test.dto.service.response.TestAllReadServiceResponseDto;
 import com.swart.runwith.sample.test.dto.service.response.TestReadServiceResponseDto;
 import com.swart.runwith.sample.test.entity.Test;
+import com.swart.runwith.sample.test.exception.TestErrorCode;
+import com.swart.runwith.sample.test.exception.TestException;
 import com.swart.runwith.sample.test.mapper.TestEntityMapper;
 import com.swart.runwith.sample.test.repository.TestRepository;
 import com.swart.runwith.sample.test.service.TestService;
@@ -103,8 +105,7 @@ public class TestServiceImpl implements TestService {
      * @return
      */
     private Test findById(final Long testId) {
-        Test test = testRepository.findById(testId)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않은 test 입니다."));
-        return test;
+        return testRepository.findById(testId)
+            .orElseThrow(() -> new TestException(TestErrorCode.NOT_FOUND_TEST));
     }
 }
