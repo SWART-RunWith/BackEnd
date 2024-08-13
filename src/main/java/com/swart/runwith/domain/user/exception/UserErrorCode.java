@@ -13,7 +13,7 @@ public enum UserErrorCode implements ErrorCode {
     // 400
     DUPLICATE_PHONE(BAD_REQUEST, "이미 존재하는 전화번호입니다."),
     DUPLICATE_EMAIL(BAD_REQUEST, "이미 존재하는 이메일입니다."),
-    INVALID_EMAIL(BAD_REQUEST, "잘못된 않는 이메일입니다."),
+    INVALID_EMAIL(BAD_REQUEST, "잘못된 이메일입니다."),
     INVALID_PASSWORD(BAD_REQUEST, "잘못된 비밀번호입니다."),
     ;
 
