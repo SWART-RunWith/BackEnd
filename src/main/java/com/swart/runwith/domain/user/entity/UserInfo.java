@@ -23,6 +23,8 @@ public class UserInfo {
     Long id;
     @Column(nullable = false)
     String name;
+    @Column(nullable = false)
+    String phone;
     @Column
     String introduction;
     @Column
@@ -37,11 +39,13 @@ public class UserInfo {
     @Builder
     public UserInfo(
         final String name,
+        final String phone,
         final Gender gender,
         final float height,
         final float weight
     ) {
         this.name = name;
+        this.phone = phone;
         this.gender = gender;
         this.height = height;
         this.weight = weight;
