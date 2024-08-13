@@ -5,14 +5,17 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.swart.runwith.domain.user.dto.controller.UserCreateControllerRequestDto;
 import com.swart.runwith.domain.user.dto.controller.UserLoginControllerRequestDto;
+import com.swart.runwith.domain.user.dto.controller.UserUpdateControllerRequestDto;
 import com.swart.runwith.domain.user.dto.service.UserCreateServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.UserLoginServiceRequestDto;
+import com.swart.runwith.domain.user.dto.service.UserUpdateServiceRequestDto;
 import com.swart.runwith.domain.user.mapper.UserDtoMapper;
 import com.swart.runwith.domain.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,6 +52,19 @@ public class UserController {
         UserLoginServiceRequestDto serviceRequestDto =
             userDtoMapper.toUserLoginServiceRequestDto(controllerRequestDto);
         userService.login(serviceRequestDto);
+
+        return ResponseEntity
+            .status(OK)
+            .build();
+    }
+
+    @PutMapping("/members/{member_id}")
+    public ResponseEntity<?> updateUser(
+        @RequestBody UserUpdateControllerRequestDto controllerRequestDto
+    ) {
+        UserUpdateServiceRequestDto serviceRequestDto =
+            userDtoMapper.toUserUpdateServiceRequestDto(controllerRequestDto);
+        userService.updateUser(serviceRequestDto);
 
         return ResponseEntity
             .status(OK)
