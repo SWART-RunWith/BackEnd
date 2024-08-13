@@ -1,9 +1,12 @@
 package com.swart.runwith.domain.user.controller;
 
+import static javax.security.auth.callback.ConfirmationCallback.OK;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import com.swart.runwith.domain.user.dto.controller.UserCreateControllerRequestDto;
+import com.swart.runwith.domain.user.dto.controller.UserLoginControllerRequestDto;
 import com.swart.runwith.domain.user.dto.service.UserCreateServiceRequestDto;
+import com.swart.runwith.domain.user.dto.service.UserLoginServiceRequestDto;
 import com.swart.runwith.domain.user.mapper.UserDtoMapper;
 import com.swart.runwith.domain.user.service.UserService;
 import jakarta.validation.Valid;
@@ -36,6 +39,19 @@ public class UserController {
 
         return ResponseEntity
             .status(CREATED)
+            .build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(
+        @Valid @RequestBody UserLoginControllerRequestDto controllerRequestDto
+    ) {
+        UserLoginServiceRequestDto serviceRequestDto =
+            userDtoMapper.toUserLoginServiceRequestDto(controllerRequestDto);
+        userService.login(serviceRequestDto);
+
+        return ResponseEntity
+            .status(OK)
             .build();
     }
 
