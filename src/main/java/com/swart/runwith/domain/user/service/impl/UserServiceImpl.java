@@ -81,6 +81,21 @@ public class UserServiceImpl implements UserService {
         userInfo.updateUser(serviceRequestDto);
     }
 
+    @Override
+    @Transactional
+    public void deleteUser(final Long userId) {
+        UserInfo userInfo = getUserInfo(userId);
+        Auth auth = getAuthByUserInfo(userInfo);
+
+        authRepository.delete(auth);
+        userRepository.delete(userInfo);
+    }
+
+    private Auth getAuthByUserInfo(final UserInfo userInfo) {
+        return authRepository.findByUserInfo(userInfo)
+            .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_AUTH));
+    }
+
     private UserInfo getUserInfo(final Long userId) {
         return userRepository.findById(userId)
             .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));

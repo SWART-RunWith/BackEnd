@@ -15,4 +15,6 @@ public interface UserService {
         Long memberId,
         UserUpdateServiceRequestDto serviceRequestDto
     );
+
+    void deleteUser(Long userId);
 }
