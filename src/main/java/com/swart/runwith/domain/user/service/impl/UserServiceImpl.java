@@ -3,6 +3,7 @@ package com.swart.runwith.domain.user.service.impl;
 import com.swart.runwith.domain.user.dto.service.request.UserCreateServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.request.UserLoginServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.request.UserUpdateServiceRequestDto;
+import com.swart.runwith.domain.user.dto.service.response.UserLoginServiceResponseDto;
 import com.swart.runwith.domain.user.entity.Auth;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void login(final UserLoginServiceRequestDto serviceRequestDto) {
+    public UserLoginServiceResponseDto login(final UserLoginServiceRequestDto serviceRequestDto) {
         // 이메일 검증
         Auth auth = getAuth(serviceRequestDto.email());
 
@@ -66,6 +67,9 @@ public class UserServiceImpl implements UserService {
         ) {
             throw new UserException(UserErrorCode.INVALID_PASSWORD);
         }
+
+        return new UserLoginServiceResponseDto(auth.getUserInfo().getId());
+    }
     }
 
     private Auth getAuth(final String email) {

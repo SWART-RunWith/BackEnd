@@ -46,16 +46,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(
+    public ResponseEntity<UserLoginServiceResponseDto> login(
         @Valid @RequestBody UserLoginControllerRequestDto controllerRequestDto
     ) {
         UserLoginServiceRequestDto serviceRequestDto =
             userDtoMapper.toUserLoginServiceRequestDto(controllerRequestDto);
-        userService.login(serviceRequestDto);
+        UserLoginServiceResponseDto serviceResponseDto = userService.login(serviceRequestDto);
 
         return ResponseEntity
             .status(OK)
-            .build();
+            .body(serviceResponseDto);
     }
 
     @PutMapping("/members/{member_id}")
