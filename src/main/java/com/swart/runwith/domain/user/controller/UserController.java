@@ -9,11 +9,13 @@ import com.swart.runwith.domain.user.dto.controller.UserUpdateControllerRequestD
 import com.swart.runwith.domain.user.dto.service.request.UserCreateServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.request.UserLoginServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.request.UserUpdateServiceRequestDto;
+import com.swart.runwith.domain.user.dto.service.response.UserLoginServiceResponseDto;
 import com.swart.runwith.domain.user.mapper.UserDtoMapper;
 import com.swart.runwith.domain.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,13 +60,17 @@ public class UserController {
             .body(serviceResponseDto);
     }
 
-    @PutMapping("/members/{member_id}")
+    @PutMapping("/users/{user_id}")
     public ResponseEntity<?> updateUser(
+        @PathVariable(name = "user_id") Long userId,
         @RequestBody UserUpdateControllerRequestDto controllerRequestDto
     ) {
         UserUpdateServiceRequestDto serviceRequestDto =
             userDtoMapper.toUserUpdateServiceRequestDto(controllerRequestDto);
-        userService.updateUser(serviceRequestDto);
+        userService.updateUser(
+            userId,
+            serviceRequestDto
+        );
 
         return ResponseEntity
             .status(OK)
