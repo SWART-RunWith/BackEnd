@@ -1,4 +1,4 @@
-package com.swart.runwith.domain.user.dto.service;
+package com.swart.runwith.domain.user.dto.service.request;
 
 import com.swart.runwith.enums.Gender;
 

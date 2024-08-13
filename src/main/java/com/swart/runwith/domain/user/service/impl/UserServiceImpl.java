@@ -1,7 +1,8 @@
 package com.swart.runwith.domain.user.service.impl;
 
-import com.swart.runwith.domain.user.dto.service.UserCreateServiceRequestDto;
-import com.swart.runwith.domain.user.dto.service.UserLoginServiceRequestDto;
+import com.swart.runwith.domain.user.dto.service.request.UserCreateServiceRequestDto;
+import com.swart.runwith.domain.user.dto.service.request.UserLoginServiceRequestDto;
+import com.swart.runwith.domain.user.dto.service.request.UserUpdateServiceRequestDto;
 import com.swart.runwith.domain.user.entity.Auth;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;

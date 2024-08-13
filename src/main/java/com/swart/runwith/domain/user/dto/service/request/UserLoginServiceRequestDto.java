@@ -1,4 +1,4 @@
-package com.swart.runwith.domain.user.dto.service;
+package com.swart.runwith.domain.user.dto.service.request;
 
 public record UserLoginServiceRequestDto(
     String email,
