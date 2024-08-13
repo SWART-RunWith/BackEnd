@@ -1,5 +1,6 @@
 package com.swart.runwith.domain.user.entity;
 
+import com.swart.runwith.domain.user.dto.service.request.UserUpdateServiceRequestDto;
 import com.swart.runwith.enums.Gender;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,5 +50,16 @@ public class UserInfo {
         this.gender = gender;
         this.height = height;
         this.weight = weight;
+    }
+
+    public void updateUser(UserUpdateServiceRequestDto requestDto) {
+        this.name = requestDto.name() == null ? name : requestDto.name();
+        this.introduction =
+            requestDto.introduction() == null ? introduction : requestDto.introduction();
+        this.profileImageUrl =
+            requestDto.profileImageUrl() == null ? profileImageUrl : requestDto.profileImageUrl();
+        this.gender = requestDto.gender() == null ? gender : requestDto.gender();
+        this.height = requestDto.height() == 0 ? height : requestDto.height();
+        this.weight = requestDto.weight() == 0 ? weight : requestDto.weight();
     }
 }
