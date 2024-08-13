@@ -1,7 +1,7 @@
 package com.swart.runwith.domain.user.controller;
 
-import static javax.security.auth.callback.ConfirmationCallback.OK;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 import com.swart.runwith.domain.user.dto.controller.UserCreateControllerRequestDto;
 import com.swart.runwith.domain.user.dto.controller.UserLoginControllerRequestDto;
