@@ -1,6 +1,7 @@
 package com.swart.runwith.domain.user.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import com.swart.runwith.global.exception.ErrorCode;
 import lombok.Getter;
@@ -15,6 +16,9 @@ public enum UserErrorCode implements ErrorCode {
     DUPLICATE_EMAIL(BAD_REQUEST, "이미 존재하는 이메일입니다."),
     INVALID_EMAIL(BAD_REQUEST, "잘못된 이메일입니다."),
     INVALID_PASSWORD(BAD_REQUEST, "잘못된 비밀번호입니다."),
+
+    // 404
+    NOT_FOUND_USER(NOT_FOUND, "유저를 찾을 수 없습니다"),
     ;
 
     private final HttpStatus status;
