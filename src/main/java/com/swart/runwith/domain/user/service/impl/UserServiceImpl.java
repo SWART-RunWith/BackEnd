@@ -1,6 +1,7 @@
 package com.swart.runwith.domain.user.service.impl;
 
 import com.swart.runwith.domain.user.dto.service.UserCreateServiceRequestDto;
+import com.swart.runwith.domain.user.dto.service.UserLoginServiceRequestDto;
 import com.swart.runwith.domain.user.entity.Auth;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;
@@ -49,5 +50,25 @@ public class UserServiceImpl implements UserService {
             .userInfo(userInfo)
             .build();
         authRepository.save(auth);
+    }
+
+    @Override
+    @Transactional
+    public void login(final UserLoginServiceRequestDto serviceRequestDto) {
+        // 이메일 검증
+        Auth auth = getAuth(serviceRequestDto.email());
+
+        // 비밀번호 검증
+        if (!passwordEncoder.matches(
+            serviceRequestDto.password(),
+            auth.getPassword())
+        ) {
+            throw new UserException(UserErrorCode.INVALID_PASSWORD);
+        }
+    }
+
+    private Auth getAuth(final String email) {
+        return authRepository.findByEmail(email)
+            .orElseThrow(() -> new UserException(UserErrorCode.INVALID_EMAIL));
     }
 }
