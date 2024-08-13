@@ -23,7 +23,7 @@ public class UserInfo {
     Long id;
     @Column(nullable = false)
     String name;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String phone;
     @Column
     String introduction;
