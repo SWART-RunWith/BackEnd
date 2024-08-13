@@ -10,4 +10,9 @@ public interface UserService {
     void signup(UserCreateServiceRequestDto serviceRequestDto);
 
     UserLoginServiceResponseDto login(UserLoginServiceRequestDto serviceRequestDto);
+
+    void updateUser(
+        Long memberId,
+        UserUpdateServiceRequestDto serviceRequestDto
+    );
 }

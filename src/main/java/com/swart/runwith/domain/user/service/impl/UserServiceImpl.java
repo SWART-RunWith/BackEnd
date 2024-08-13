@@ -70,6 +70,20 @@ public class UserServiceImpl implements UserService {
 
         return new UserLoginServiceResponseDto(auth.getUserInfo().getId());
     }
+
+    @Override
+    @Transactional
+    public void updateUser(
+        final Long userId,
+        final UserUpdateServiceRequestDto serviceRequestDto
+    ) {
+        UserInfo userInfo = getUserInfo(userId);
+        userInfo.updateUser(serviceRequestDto);
+    }
+
+    private UserInfo getUserInfo(final Long userId) {
+        return userRepository.findById(userId)
+            .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
 
     private Auth getAuth(final String email) {
