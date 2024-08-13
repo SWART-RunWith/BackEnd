@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserLoginServiceResponseDto login(final UserLoginServiceRequestDto serviceRequestDto) {
         // 이메일 검증
-        Auth auth = getAuth(serviceRequestDto.email());
+        Auth auth = getAuthByEmail(serviceRequestDto.email());
 
         // 비밀번호 검증
         if (!passwordEncoder.matches(
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
             .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
 
-    private Auth getAuth(final String email) {
+    private Auth getAuthByEmail(final String email) {
         return authRepository.findByEmail(email)
             .orElseThrow(() -> new UserException(UserErrorCode.INVALID_EMAIL));
     }
