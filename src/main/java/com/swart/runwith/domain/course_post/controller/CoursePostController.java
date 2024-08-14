@@ -5,11 +5,11 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.swart.runwith.domain.course_post.dto.controller.CoursePostCreateControllerRequestDto;
 import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
-import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadAllServiceResponseDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.mapper.CoursePostDtoMapper;
 import com.swart.runwith.domain.course_post.service.CoursePostService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,14 +58,14 @@ public class CoursePostController {
     }
 
     @GetMapping("")
-    public ResponseEntity<CoursePostReadAllServiceResponseDto> readAll() {
+    public ResponseEntity<List<CoursePostReadServiceResponseDto>> readAll() {
         return ResponseEntity
             .status(OK)
             .body(coursePostService.readAll());
     }
 
     @GetMapping("/mine")
-    public ResponseEntity<CoursePostReadAllServiceResponseDto> readMine(
+    public ResponseEntity<List<CoursePostReadServiceResponseDto>> readMine(
 //        Auth userDetails
     ) {
         return ResponseEntity

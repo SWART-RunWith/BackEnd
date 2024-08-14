@@ -1,7 +1,6 @@
 package com.swart.runwith.domain.course_post.service.impl;
 
 import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
-import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadAllServiceResponseDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.entity.CoursePost;
 import com.swart.runwith.domain.course_post.exception.CoursePostErrorCode;
@@ -69,8 +68,8 @@ public class CoursePostServiceImpl implements CoursePostService {
 
     @Override
     @Transactional(readOnly = true)
-    public CoursePostReadAllServiceResponseDto readAll() {
-        List<CoursePostReadServiceResponseDto> serviceResponseDtoList = coursePostRepository
+    public List<CoursePostReadServiceResponseDto> readAll() {
+        return coursePostRepository
             .findAll()
             .stream()
             .map(coursePost -> coursePostEntityMapper.toCoursePostReadServiceResponseDto(
