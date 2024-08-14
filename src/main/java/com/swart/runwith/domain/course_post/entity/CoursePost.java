@@ -42,12 +42,10 @@ public class CoursePost {
     public CoursePost(
         final String title,
         final String content,
-        final Long like,
         final UserInfo userInfo
     ) {
         this.title = title;
         this.content = content;
-        this.like = like;
         this.userInfo = userInfo;
     }
 }
