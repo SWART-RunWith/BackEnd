@@ -38,6 +38,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(
+    public ResponseEntity<Void> signup(
         @Valid @RequestBody UserCreateControllerRequestDto controllerRequestDto
     ) {
         UserCreateServiceRequestDto serviceRequestDto
@@ -63,15 +64,15 @@ public class UserController {
     }
 
     @PutMapping("/users/{user_id}")
-    public ResponseEntity<?> updateUser(
         @PathVariable(name = "user_id") Long userId,
+    public ResponseEntity<Void> update(
         @RequestBody UserUpdateControllerRequestDto controllerRequestDto
     ) {
         UserUpdateServiceRequestDto serviceRequestDto =
             userDtoMapper.toUserUpdateServiceRequestDto(controllerRequestDto);
 
-        userService.updateUser(
             userId,
+        userService.update(
             serviceRequestDto
         );
 
@@ -81,10 +82,10 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{user_id}")
-    public ResponseEntity<?> deleteUser(
         @PathVariable(name = "user_id") Long userId
+    public ResponseEntity<Void> delete(
     ) {
-        userService.deleteUser(userId);
+        userService.delete(
 
         return ResponseEntity
             .status(OK)
@@ -92,11 +93,11 @@ public class UserController {
     }
 
     @GetMapping("/users/{user_id}")
-    public ResponseEntity<UserReadServiceResponseDto> readUser(
         @PathVariable(name = "user_id") Long userId
+    public ResponseEntity<UserReadServiceResponseDto> read(
     ) {
         return ResponseEntity
             .status(OK)
-            .body(userService.readUser(userId));
+            .body(userService.read(
     }
 }

@@ -75,8 +75,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(
         final Long userId,
+    public void update(
         final UserUpdateServiceRequestDto serviceRequestDto
     ) {
         UserInfo userInfo = findById(userId);
@@ -85,8 +85,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deleteUser(final Long userId) {
         UserInfo userInfo = findById(userId);
+    public void delete(
         Auth auth = getAuthByUserInfo(userInfo);
 
         authRepository.delete(auth);
@@ -95,8 +95,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserReadServiceResponseDto readUser(final Long userId) {
         UserInfo userInfo = findById(userId);
+    public UserReadServiceResponseDto read(
 
         // TO DO : 러닝화 조회 로직 추가
 
