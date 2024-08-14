@@ -63,4 +63,15 @@ public class CoursePostController {
             .status(OK)
             .body(coursePostService.readAll());
     }
+
+    @GetMapping("/mine")
+    public ResponseEntity<CoursePostReadAllServiceResponseDto> readMine(
+//        Auth userDetails
+    ) {
+        return ResponseEntity
+            .status(OK)
+            .body(coursePostService.readMine(
+//                userDetails
+            ));
+    }
 }
