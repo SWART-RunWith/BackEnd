@@ -34,13 +34,13 @@ public class TestController {
     private final TestDtoMapper testDtoMapper;
 
     @PostMapping("")
-    public ResponseEntity<?> createTest(
+    public ResponseEntity<?> create(
         @Valid @RequestBody TestCreateControllerRequestDto controllerRequestDto
     ) {
         TestCreateServiceRequestDto serviceRequestDto =
             testDtoMapper.toTestCreateServiceRequestDto(controllerRequestDto);
 
-        testService.createTest(serviceRequestDto);
+        testService.create(serviceRequestDto);
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -48,33 +48,30 @@ public class TestController {
     }
 
     @GetMapping("/{test_id}")
-    public ResponseEntity<TestReadServiceResponseDto> readTest(
+    public ResponseEntity<TestReadServiceResponseDto> read(
         @PathVariable(name = "test_id") Long testId
     ) {
-        TestReadServiceResponseDto serviceResponseDto = testService.readTest(testId);
-
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(serviceResponseDto);
+            .body(testService.read(testId));
     }
 
     @GetMapping("")
-    public ResponseEntity<TestAllReadServiceResponseDto> readAllTest() {
-        TestAllReadServiceResponseDto serviceResponseDto = testService.readAllTest();
-
+    public ResponseEntity<TestAllReadServiceResponseDto> readAll() {
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(serviceResponseDto);
+            .body(testService.readAll());
     }
 
     @PutMapping("/{test_id}")
-    public ResponseEntity<?> updateTest(
+    public ResponseEntity<?> update(
         @PathVariable(name = "test_id") Long testId,
         @NotNull @RequestBody TestUpdateControllerRequestDto controllerRequestDto
     ) {
         TestUpdateServiceRequestDto serviceRequestDto = testDtoMapper.toTestUpdateServiceRequestDto(
             controllerRequestDto);
-        testService.updateTest(testId, serviceRequestDto);
+
+        testService.update(testId, serviceRequestDto);
 
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -83,8 +80,8 @@ public class TestController {
     }
 
     @DeleteMapping("/{test_id}")
-    public ResponseEntity<?> deleteTest(@PathVariable(name = "test_id") Long testId) {
-        testService.deleteTest(testId);
+    public ResponseEntity<?> delete(@PathVariable(name = "test_id") Long testId) {
+        testService.delete(testId);
 
         return ResponseEntity
             .status(HttpStatus.OK)
