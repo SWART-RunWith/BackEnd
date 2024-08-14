@@ -4,6 +4,7 @@ import com.swart.runwith.domain.user.dto.service.request.UserCreateServiceReques
 import com.swart.runwith.domain.user.dto.service.request.UserLoginServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.request.UserUpdateServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.response.UserLoginServiceResponseDto;
+import com.swart.runwith.domain.user.dto.service.response.UserReadServiceResponseDto;
 
 public interface UserService {
 
@@ -17,4 +18,6 @@ public interface UserService {
     );
 
     void deleteUser(Long userId);
+
+    UserReadServiceResponseDto readUser(Long userId);
 }

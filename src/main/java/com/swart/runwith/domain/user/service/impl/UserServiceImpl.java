@@ -4,6 +4,7 @@ import com.swart.runwith.domain.user.dto.service.request.UserCreateServiceReques
 import com.swart.runwith.domain.user.dto.service.request.UserLoginServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.request.UserUpdateServiceRequestDto;
 import com.swart.runwith.domain.user.dto.service.response.UserLoginServiceResponseDto;
+import com.swart.runwith.domain.user.dto.service.response.UserReadServiceResponseDto;
 import com.swart.runwith.domain.user.entity.Auth;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;
@@ -77,18 +78,28 @@ public class UserServiceImpl implements UserService {
         final Long userId,
         final UserUpdateServiceRequestDto serviceRequestDto
     ) {
-        UserInfo userInfo = getUserInfo(userId);
+        UserInfo userInfo = findById(userId);
         userInfo.updateUser(serviceRequestDto);
     }
 
     @Override
     @Transactional
     public void deleteUser(final Long userId) {
-        UserInfo userInfo = getUserInfo(userId);
+        UserInfo userInfo = findById(userId);
         Auth auth = getAuthByUserInfo(userInfo);
 
         authRepository.delete(auth);
         userRepository.delete(userInfo);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserReadServiceResponseDto readUser(final Long userId) {
+        UserInfo userInfo = findById(userId);
+        
+        // TO DO : 러닝화 조회 로직 추가
+
+        return userEntityMapper.toUserReadServiceResponseDto(userInfo);
     }
 
     private Auth getAuthByUserInfo(final UserInfo userInfo) {
@@ -96,7 +107,7 @@ public class UserServiceImpl implements UserService {
             .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_AUTH));
     }
 
-    private UserInfo getUserInfo(final Long userId) {
+    private UserInfo findById(final Long userId) {
         return userRepository.findById(userId)
             .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
