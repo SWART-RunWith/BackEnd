@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.swart.runwith.domain.course_post.dto.controller.CoursePostCreateControllerRequestDto;
 import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadAllServiceResponseDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.mapper.CoursePostDtoMapper;
 import com.swart.runwith.domain.course_post.service.CoursePostService;
@@ -54,5 +55,12 @@ public class CoursePostController {
         return ResponseEntity
             .status(OK)
             .body(coursePostService.read(courseId));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<CoursePostReadAllServiceResponseDto> readAll() {
+        return ResponseEntity
+            .status(OK)
+            .body(coursePostService.readAll());
     }
 }
