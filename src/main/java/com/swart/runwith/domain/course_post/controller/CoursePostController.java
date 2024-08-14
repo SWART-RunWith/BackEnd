@@ -26,14 +26,14 @@ public class CoursePostController {
     private final CoursePostDtoMapper coursePostDtoMapper;
 
     @PostMapping("")
-    public ResponseEntity<Void> createCoursePost(
+    public ResponseEntity<Void> create(
 //        Auth userDetails,
         @Valid @RequestBody CoursePostCreateControllerRequestDto controllerRequestDto
     ) {
         CoursePostCreateServiceRequestDto serviceRequestDto =
             coursePostDtoMapper.toCoursePostCreateServiceRequestDto(controllerRequestDto);
 
-        coursePostService.createCoursePost(
+        coursePostService.create(
 //            userDetails,
             serviceRequestDto
         );

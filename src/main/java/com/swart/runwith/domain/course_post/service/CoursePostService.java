@@ -4,7 +4,7 @@ import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceR
 
 public interface CoursePostService {
 
-    void createCoursePost(
+    void create(
 //        Auth userDetails,
         CoursePostCreateServiceRequestDto serviceRequestDto
     );
