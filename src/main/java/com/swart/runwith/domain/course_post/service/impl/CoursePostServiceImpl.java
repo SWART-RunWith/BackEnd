@@ -1,7 +1,10 @@
 package com.swart.runwith.domain.course_post.service.impl;
 
 import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.entity.CoursePost;
+import com.swart.runwith.domain.course_post.exception.CoursePostErrorCode;
+import com.swart.runwith.domain.course_post.exception.CoursePostException;
 import com.swart.runwith.domain.course_post.mapper.CoursePostEntityMapper;
 import com.swart.runwith.domain.course_post.repository.CoursePostRepository;
 import com.swart.runwith.domain.course_post.service.CoursePostService;
@@ -10,9 +13,9 @@ import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;
 import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.repository.AuthRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +52,24 @@ public class CoursePostServiceImpl implements CoursePostService {
             .userInfo(userInfo)
             .build();
         coursePostRepository.save(coursePost);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CoursePostReadServiceResponseDto read(final Long courseId) {
+        CoursePost coursePost = findById(courseId);
+
+        return CoursePostReadServiceResponseDto.builder()
+            .id(coursePost.getId())
+            .title(coursePost.getTitle())
+            .content(coursePost.getTitle())
+            .likeCount(coursePost.getLikeCount())
+            .name(coursePost.getUserInfo().getName())
+            .build();
+    }
+
+    private CoursePost findById(final Long courseId) {
+        return coursePostRepository.findById(courseId)
+            .orElseThrow(() -> new CoursePostException(CoursePostErrorCode.NOT_FOUND_COURSE_POST));
     }
 }
