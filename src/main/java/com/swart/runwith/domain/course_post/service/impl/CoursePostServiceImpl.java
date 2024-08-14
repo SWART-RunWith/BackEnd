@@ -59,13 +59,11 @@ public class CoursePostServiceImpl implements CoursePostService {
     public CoursePostReadServiceResponseDto read(final Long courseId) {
         CoursePost coursePost = findById(courseId);
 
-        return CoursePostReadServiceResponseDto.builder()
-            .id(coursePost.getId())
-            .title(coursePost.getTitle())
-            .content(coursePost.getTitle())
-            .likeCount(coursePost.getLikeCount())
-            .name(coursePost.getUserInfo().getName())
-            .build();
+        return coursePostEntityMapper.toCoursePostReadServiceResponseDto(
+            coursePost,
+            coursePost.getUserInfo().getName()
+        );
+    }
     }
 
     private CoursePost findById(final Long courseId) {

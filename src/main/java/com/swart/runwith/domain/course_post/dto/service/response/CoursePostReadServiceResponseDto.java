@@ -1,8 +1,5 @@
 package com.swart.runwith.domain.course_post.dto.service.response;
 
-import lombok.Builder;
-
-@Builder
 public record CoursePostReadServiceResponseDto(
     Long id,
     String title,
