@@ -26,7 +26,7 @@ public class CoursePostController {
     private final CoursePostDtoMapper coursePostDtoMapper;
 
     @PostMapping("")
-    public ResponseEntity<?> createCoursePost(
+    public ResponseEntity<Void> createCoursePost(
 //        Auth userDetails,
         @Valid @RequestBody CoursePostCreateControllerRequestDto controllerRequestDto
     ) {
