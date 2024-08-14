@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -28,10 +29,11 @@ public class CoursePost {
     @Column
     String content;
     @Column
-    Long like = 0L;
+    Long likeCount = 0L;
     // 러닝 데이터 & 코스 추가
     // @OneToOne
     // RunningData runningData;
+    @JoinColumn(name = "user_info_id")
     @ManyToOne(
         fetch = FetchType.LAZY,
         optional = false
