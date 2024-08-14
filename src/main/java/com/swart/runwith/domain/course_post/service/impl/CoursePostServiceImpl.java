@@ -1,6 +1,7 @@
 package com.swart.runwith.domain.course_post.service.impl;
 
 import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadAllServiceResponseDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.entity.CoursePost;
 import com.swart.runwith.domain.course_post.exception.CoursePostErrorCode;
@@ -13,6 +14,7 @@ import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;
 import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.repository.AuthRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,6 +66,19 @@ public class CoursePostServiceImpl implements CoursePostService {
             coursePost.getUserInfo().getName()
         );
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CoursePostReadAllServiceResponseDto readAll() {
+        List<CoursePostReadServiceResponseDto> serviceResponseDtoList = coursePostRepository
+            .findAll()
+            .stream()
+            .map(coursePost -> coursePostEntityMapper.toCoursePostReadServiceResponseDto(
+                coursePost,
+                coursePost.getUserInfo().getName()
+            )).toList();
+
+        return new CoursePostReadAllServiceResponseDto(serviceResponseDtoList);
     }
 
     private CoursePost findById(final Long courseId) {

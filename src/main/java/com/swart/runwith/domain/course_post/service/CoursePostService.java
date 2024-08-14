@@ -1,6 +1,7 @@
 package com.swart.runwith.domain.course_post.service;
 
 import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadAllServiceResponseDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 
 public interface CoursePostService {
@@ -11,4 +12,6 @@ public interface CoursePostService {
     );
 
     CoursePostReadServiceResponseDto read(Long courseId);
+
+    CoursePostReadAllServiceResponseDto readAll();
 }
