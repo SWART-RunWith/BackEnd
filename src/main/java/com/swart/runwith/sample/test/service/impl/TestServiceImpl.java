@@ -33,7 +33,7 @@ public class TestServiceImpl implements TestService {
      */
     @Override
     @Transactional
-    public void createTest(final TestCreateServiceRequestDto serviceRequestDto) {
+    public void create(final TestCreateServiceRequestDto serviceRequestDto) {
         Test test = testEntityMapper.toTest(serviceRequestDto);
         testRepository.save(test);
     }
@@ -46,7 +46,7 @@ public class TestServiceImpl implements TestService {
      */
     @Override
     @Transactional(readOnly = true)
-    public TestReadServiceResponseDto readTest(final Long testId) {
+    public TestReadServiceResponseDto read(final Long testId) {
         Test test = findById(testId);
 
         return testEntityMapper.toTestReadServiceResponseDto(test);
@@ -59,7 +59,7 @@ public class TestServiceImpl implements TestService {
      */
     @Override
     @Transactional(readOnly = true)
-    public TestAllReadServiceResponseDto readAllTest() {
+    public TestAllReadServiceResponseDto readAll() {
         // stream
         List<TestReadServiceResponseDto> responseDtoStreamList =
             testRepository
@@ -84,7 +84,7 @@ public class TestServiceImpl implements TestService {
      */
     @Override
     @Transactional
-    public void updateTest(
+    public void update(
         final Long testId,
         final TestUpdateServiceRequestDto serviceRequestDto
     ) {
@@ -93,7 +93,7 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public void deleteTest(final Long testId) {
+    public void delete(final Long testId) {
         Test test = findById(testId);
         testRepository.delete(test);
     }

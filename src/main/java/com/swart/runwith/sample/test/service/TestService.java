@@ -7,16 +7,16 @@ import com.swart.runwith.sample.test.dto.service.response.TestReadServiceRespons
 
 public interface TestService {
 
-    void createTest(final TestCreateServiceRequestDto serviceRequestDto);
+    void create(final TestCreateServiceRequestDto serviceRequestDto);
 
-    TestReadServiceResponseDto readTest(final Long testId);
+    TestReadServiceResponseDto read(final Long testId);
 
-    TestAllReadServiceResponseDto readAllTest();
+    TestAllReadServiceResponseDto readAll();
 
-    void updateTest(
+    void update(
         final Long testId,
         final TestUpdateServiceRequestDto serviceRequestDto
     );
 
-    void deleteTest(final Long testId);
+    void delete(final Long testId);
 }
