@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +36,7 @@ public class UserController {
     private final UserDtoMapper userDtoMapper;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(
+    public ResponseEntity<Void> signup(
         @Valid @RequestBody UserCreateControllerRequestDto controllerRequestDto
     ) {
         UserCreateServiceRequestDto serviceRequestDto
@@ -62,16 +61,16 @@ public class UserController {
             .body(userService.login(serviceRequestDto));
     }
 
-    @PutMapping("/users/{user_id}")
-    public ResponseEntity<?> updateUser(
-        @PathVariable(name = "user_id") Long userId,
+    @PutMapping("/users")
+    public ResponseEntity<Void> update(
+//        Auth userDetails,
         @RequestBody UserUpdateControllerRequestDto controllerRequestDto
     ) {
         UserUpdateServiceRequestDto serviceRequestDto =
             userDtoMapper.toUserUpdateServiceRequestDto(controllerRequestDto);
 
-        userService.updateUser(
-            userId,
+        userService.update(
+//            userDetails,
             serviceRequestDto
         );
 
@@ -80,23 +79,27 @@ public class UserController {
             .build();
     }
 
-    @DeleteMapping("/users/{user_id}")
-    public ResponseEntity<?> deleteUser(
-        @PathVariable(name = "user_id") Long userId
+    @DeleteMapping("/users")
+    public ResponseEntity<Void> delete(
+//        Auth userDetails,
     ) {
-        userService.deleteUser(userId);
+        userService.delete(
+//            userDetails,
+        );
 
         return ResponseEntity
             .status(OK)
             .build();
     }
 
-    @GetMapping("/users/{user_id}")
-    public ResponseEntity<UserReadServiceResponseDto> readUser(
-        @PathVariable(name = "user_id") Long userId
+    @GetMapping("/users")
+    public ResponseEntity<UserReadServiceResponseDto> read(
+//        Auth userDetails,
     ) {
         return ResponseEntity
             .status(OK)
-            .body(userService.readUser(userId));
+            .body(userService.read(
+//                userDetails,
+            ));
     }
 }

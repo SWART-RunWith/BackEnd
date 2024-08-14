@@ -12,12 +12,16 @@ public interface UserService {
 
     UserLoginServiceResponseDto login(UserLoginServiceRequestDto serviceRequestDto);
 
-    void updateUser(
-        Long memberId,
+    void update(
+//        Auth userDetails,
         UserUpdateServiceRequestDto serviceRequestDto
     );
 
-    void deleteUser(Long userId);
+    void delete(
+//        Auth userDetails,
+    );
 
-    UserReadServiceResponseDto readUser(Long userId);
+    UserReadServiceResponseDto read(
+//        Auth userDetails,
+    );
 }
