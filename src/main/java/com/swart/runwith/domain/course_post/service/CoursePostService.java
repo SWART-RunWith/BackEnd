@@ -14,4 +14,8 @@ public interface CoursePostService {
     CoursePostReadServiceResponseDto read(Long courseId);
 
     List<CoursePostReadServiceResponseDto> readAll();
+
+    List<CoursePostReadServiceResponseDto> readMine(
+//        Auth userDetails,
+    );
 }

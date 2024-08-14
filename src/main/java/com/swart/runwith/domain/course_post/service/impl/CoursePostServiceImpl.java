@@ -76,8 +76,22 @@ public class CoursePostServiceImpl implements CoursePostService {
                 coursePost,
                 coursePost.getUserInfo().getName()
             )).toList();
+    }
 
-        return new CoursePostReadAllServiceResponseDto(serviceResponseDtoList);
+    @Override
+    @Transactional(readOnly = true)
+    public List<CoursePostReadServiceResponseDto> readMine(
+//        Auth userDetails,
+    ) {
+        UserInfo userInfo = testUserInfo();
+
+        return coursePostRepository
+            .findByUserInfo(userInfo)
+            .stream()
+            .map(coursePost -> coursePostEntityMapper.toCoursePostReadServiceResponseDto(
+                coursePost,
+                userInfo.getName()
+            )).toList();
     }
 
     private CoursePost findById(final Long courseId) {
