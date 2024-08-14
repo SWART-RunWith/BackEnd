@@ -39,7 +39,7 @@ public class CoursePostServiceImpl implements CoursePostService {
     @Override
     @Transactional
     public void createCoursePost(
-        final Auth userDetails,
+//        final Auth userDetails,
         final CoursePostCreateServiceRequestDto serviceRequestDto
     ) {
         UserInfo userInfo = testUserInfo();

@@ -6,7 +6,6 @@ import com.swart.runwith.domain.course_post.dto.controller.CoursePostCreateContr
 import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
 import com.swart.runwith.domain.course_post.mapper.CoursePostDtoMapper;
 import com.swart.runwith.domain.course_post.service.CoursePostService;
-import com.swart.runwith.domain.user.entity.Auth;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,14 +27,14 @@ public class CoursePostController {
 
     @PostMapping("")
     public ResponseEntity<?> createCoursePost(
-        Auth userDetails,
+//        Auth userDetails,
         @Valid @RequestBody CoursePostCreateControllerRequestDto controllerRequestDto
     ) {
         CoursePostCreateServiceRequestDto serviceRequestDto =
             coursePostDtoMapper.toCoursePostCreateServiceRequestDto(controllerRequestDto);
 
         coursePostService.createCoursePost(
-            userDetails,
+//            userDetails,
             serviceRequestDto
         );
 
