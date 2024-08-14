@@ -75,18 +75,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-        final Long userId,
     public void update(
+//        final Auth userDetails,
         final UserUpdateServiceRequestDto serviceRequestDto
     ) {
-        UserInfo userInfo = findById(userId);
+        UserInfo userInfo = testUserInfo();
         userInfo.updateUser(serviceRequestDto);
     }
 
     @Override
     @Transactional
-        UserInfo userInfo = findById(userId);
     public void delete(
+//        final Auth userDetails,
+    ) {
+        UserInfo userInfo = testUserInfo();
         Auth auth = getAuthByUserInfo(userInfo);
 
         authRepository.delete(auth);
@@ -95,8 +97,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-        UserInfo userInfo = findById(userId);
     public UserReadServiceResponseDto read(
+//        final Auth userDetails,
+    ) {
+        UserInfo userInfo = testUserInfo();
 
         // TO DO : 러닝화 조회 로직 추가
 
