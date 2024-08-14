@@ -31,6 +31,12 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    // token 작성 전 test 용 user info 및 auth 반환 method
+    private UserInfo testUserInfo() {
+        return authRepository.findById(1L)
+            .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_AUTH)).getUserInfo();
+    }
+
     @Override
     @Transactional
     public void signup(final UserCreateServiceRequestDto serviceRequestDto) {
@@ -110,11 +116,6 @@ public class UserServiceImpl implements UserService {
     private Auth getAuthByUserInfo(final UserInfo userInfo) {
         return authRepository.findByUserInfo(userInfo)
             .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_AUTH));
-    }
-
-    private UserInfo findById(final Long userId) {
-        return userRepository.findById(userId)
-            .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
 
     private Auth getAuthByEmail(final String email) {
