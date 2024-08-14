@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    // repository
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
 
@@ -96,7 +97,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserReadServiceResponseDto readUser(final Long userId) {
         UserInfo userInfo = findById(userId);
-        
+
         // TO DO : 러닝화 조회 로직 추가
 
         return userEntityMapper.toUserReadServiceResponseDto(userInfo);

@@ -56,11 +56,10 @@ public class UserController {
     ) {
         UserLoginServiceRequestDto serviceRequestDto =
             userDtoMapper.toUserLoginServiceRequestDto(controllerRequestDto);
-        UserLoginServiceResponseDto serviceResponseDto = userService.login(serviceRequestDto);
 
         return ResponseEntity
             .status(OK)
-            .body(serviceResponseDto);
+            .body(userService.login(serviceRequestDto));
     }
 
     @PutMapping("/users/{user_id}")
@@ -70,6 +69,7 @@ public class UserController {
     ) {
         UserUpdateServiceRequestDto serviceRequestDto =
             userDtoMapper.toUserUpdateServiceRequestDto(controllerRequestDto);
+
         userService.updateUser(
             userId,
             serviceRequestDto
