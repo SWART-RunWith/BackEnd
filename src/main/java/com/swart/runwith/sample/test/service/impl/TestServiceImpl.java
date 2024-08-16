@@ -2,7 +2,6 @@ package com.swart.runwith.sample.test.service.impl;
 
 import com.swart.runwith.sample.test.dto.service.request.TestCreateServiceRequestDto;
 import com.swart.runwith.sample.test.dto.service.request.TestUpdateServiceRequestDto;
-import com.swart.runwith.sample.test.dto.service.response.TestAllReadServiceResponseDto;
 import com.swart.runwith.sample.test.dto.service.response.TestReadServiceResponseDto;
 import com.swart.runwith.sample.test.entity.Test;
 import com.swart.runwith.sample.test.exception.TestErrorCode;
@@ -59,7 +58,7 @@ public class TestServiceImpl implements TestService {
      */
     @Override
     @Transactional(readOnly = true)
-    public TestAllReadServiceResponseDto readAll() {
+    public List<TestReadServiceResponseDto> readAll() {
         // stream
         List<TestReadServiceResponseDto> responseDtoStreamList =
             testRepository
@@ -74,7 +73,7 @@ public class TestServiceImpl implements TestService {
             responseDtoIterList.add(testEntityMapper.toTestReadServiceResponseDto(test));
         }
 
-        return new TestAllReadServiceResponseDto(responseDtoStreamList);
+        return responseDtoStreamList;
     }
 
     /**

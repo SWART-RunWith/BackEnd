@@ -4,12 +4,12 @@ import com.swart.runwith.sample.test.dto.controller.TestCreateControllerRequestD
 import com.swart.runwith.sample.test.dto.controller.TestUpdateControllerRequestDto;
 import com.swart.runwith.sample.test.dto.service.request.TestCreateServiceRequestDto;
 import com.swart.runwith.sample.test.dto.service.request.TestUpdateServiceRequestDto;
-import com.swart.runwith.sample.test.dto.service.response.TestAllReadServiceResponseDto;
 import com.swart.runwith.sample.test.dto.service.response.TestReadServiceResponseDto;
 import com.swart.runwith.sample.test.mapper.TestDtoMapper;
 import com.swart.runwith.sample.test.service.TestService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +57,7 @@ public class TestController {
     }
 
     @GetMapping("")
-    public ResponseEntity<TestAllReadServiceResponseDto> readAll() {
+    public ResponseEntity<List<TestReadServiceResponseDto>> readAll() {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(testService.readAll());
