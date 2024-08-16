@@ -4,12 +4,12 @@ import com.swart.runwith.sample.test.dto.controller.TestCreateControllerRequestD
 import com.swart.runwith.sample.test.dto.controller.TestUpdateControllerRequestDto;
 import com.swart.runwith.sample.test.dto.service.request.TestCreateServiceRequestDto;
 import com.swart.runwith.sample.test.dto.service.request.TestUpdateServiceRequestDto;
-import com.swart.runwith.sample.test.dto.service.response.TestAllReadServiceResponseDto;
 import com.swart.runwith.sample.test.dto.service.response.TestReadServiceResponseDto;
 import com.swart.runwith.sample.test.mapper.TestDtoMapper;
 import com.swart.runwith.sample.test.service.TestService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class TestController {
     private final TestDtoMapper testDtoMapper;
 
     @PostMapping("")
-    public ResponseEntity<?> create(
+    public ResponseEntity<Void> create(
         @Valid @RequestBody TestCreateControllerRequestDto controllerRequestDto
     ) {
         TestCreateServiceRequestDto serviceRequestDto =
@@ -57,21 +57,24 @@ public class TestController {
     }
 
     @GetMapping("")
-    public ResponseEntity<TestAllReadServiceResponseDto> readAll() {
+    public ResponseEntity<List<TestReadServiceResponseDto>> readAll() {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(testService.readAll());
     }
 
     @PutMapping("/{test_id}")
-    public ResponseEntity<?> update(
+    public ResponseEntity<Void> update(
         @PathVariable(name = "test_id") Long testId,
         @NotNull @RequestBody TestUpdateControllerRequestDto controllerRequestDto
     ) {
         TestUpdateServiceRequestDto serviceRequestDto = testDtoMapper.toTestUpdateServiceRequestDto(
             controllerRequestDto);
 
-        testService.update(testId, serviceRequestDto);
+        testService.update(
+            testId,
+            serviceRequestDto
+        );
 
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -80,7 +83,7 @@ public class TestController {
     }
 
     @DeleteMapping("/{test_id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "test_id") Long testId) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "test_id") Long testId) {
         testService.delete(testId);
 
         return ResponseEntity
