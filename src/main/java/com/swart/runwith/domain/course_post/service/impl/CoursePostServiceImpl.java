@@ -1,7 +1,10 @@
 package com.swart.runwith.domain.course_post.service.impl;
 
 import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.entity.CoursePost;
+import com.swart.runwith.domain.course_post.exception.CoursePostErrorCode;
+import com.swart.runwith.domain.course_post.exception.CoursePostException;
 import com.swart.runwith.domain.course_post.mapper.CoursePostEntityMapper;
 import com.swart.runwith.domain.course_post.repository.CoursePostRepository;
 import com.swart.runwith.domain.course_post.service.CoursePostService;
@@ -10,9 +13,10 @@ import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;
 import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.repository.AuthRepository;
-import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +53,49 @@ public class CoursePostServiceImpl implements CoursePostService {
             .userInfo(userInfo)
             .build();
         coursePostRepository.save(coursePost);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CoursePostReadServiceResponseDto read(final Long courseId) {
+        CoursePost coursePost = findById(courseId);
+
+        return coursePostEntityMapper.toCoursePostReadServiceResponseDto(
+            coursePost,
+            coursePost.getUserInfo().getName()
+        );
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CoursePostReadServiceResponseDto> readAll() {
+        return coursePostRepository
+            .findAll()
+            .stream()
+            .map(coursePost -> coursePostEntityMapper.toCoursePostReadServiceResponseDto(
+                coursePost,
+                coursePost.getUserInfo().getName()
+            )).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CoursePostReadServiceResponseDto> readMine(
+//        Auth userDetails,
+    ) {
+        UserInfo userInfo = testUserInfo();
+
+        return coursePostRepository
+            .findByUserInfo(userInfo)
+            .stream()
+            .map(coursePost -> coursePostEntityMapper.toCoursePostReadServiceResponseDto(
+                coursePost,
+                userInfo.getName()
+            )).toList();
+    }
+
+    private CoursePost findById(final Long courseId) {
+        return coursePostRepository.findById(courseId)
+            .orElseThrow(() -> new CoursePostException(CoursePostErrorCode.NOT_FOUND_COURSE_POST));
     }
 }
