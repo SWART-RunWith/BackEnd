@@ -71,7 +71,10 @@ public class TestController {
         TestUpdateServiceRequestDto serviceRequestDto = testDtoMapper.toTestUpdateServiceRequestDto(
             controllerRequestDto);
 
-        testService.update(testId, serviceRequestDto);
+        testService.update(
+            testId,
+            serviceRequestDto
+        );
 
         return ResponseEntity
             .status(HttpStatus.OK)
