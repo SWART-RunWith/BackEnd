@@ -34,7 +34,7 @@ public class TestController {
     private final TestDtoMapper testDtoMapper;
 
     @PostMapping("")
-    public ResponseEntity<?> create(
+    public ResponseEntity<Void> create(
         @Valid @RequestBody TestCreateControllerRequestDto controllerRequestDto
     ) {
         TestCreateServiceRequestDto serviceRequestDto =
@@ -64,7 +64,7 @@ public class TestController {
     }
 
     @PutMapping("/{test_id}")
-    public ResponseEntity<?> update(
+    public ResponseEntity<Void> update(
         @PathVariable(name = "test_id") Long testId,
         @NotNull @RequestBody TestUpdateControllerRequestDto controllerRequestDto
     ) {
@@ -83,7 +83,7 @@ public class TestController {
     }
 
     @DeleteMapping("/{test_id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "test_id") Long testId) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "test_id") Long testId) {
         testService.delete(testId);
 
         return ResponseEntity
