@@ -94,6 +94,20 @@ public class RunningShoesServiceImpl implements RunningShoesService {
         runningShoes.update(serviceRequestDto);
     }
 
+    @Override
+    @Transactional
+    public void delete(
+//        final UserDetails userDetails,
+        final Long shoesId
+    ) {
+        UserInfo userInfo = testUserInfo();
+        RunningShoes runningShoes = getRunningShoesById(shoesId);
+
+        validateRunningShoesAccessAuthority(userInfo, runningShoes);
+
+        runningShoesRepository.delete(runningShoes);
+    }
+
     private RunningShoes getRunningShoesById(final Long shoesId) {
         return runningShoesRepository.findById(shoesId)
             .orElseThrow(

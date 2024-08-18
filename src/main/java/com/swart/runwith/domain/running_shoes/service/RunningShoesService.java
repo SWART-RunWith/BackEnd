@@ -26,4 +26,9 @@ public interface RunningShoesService {
         Long shoesId,
         RunningShoesUpdateServiceRequestDto serviceRequestDto
     );
+
+    void delete(
+//        UserDetails userDetails,
+        Long shoesId
+    );
 }
