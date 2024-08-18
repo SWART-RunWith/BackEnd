@@ -26,8 +26,14 @@ public class RunningShoesController {
     // mapper
     private final RunningShoesDtoMapper runningShoesDtoMapper;
 
+    /**
+     * 러닝화 생성
+     *
+     * @param controllerRequestDto
+     * @return
+     */
     @PostMapping("")
-    public ResponseEntity<?> create(
+    public ResponseEntity<Void> create(
 //        @AuthenticationPrincipal UserDetails userDetails,
         @RequestBody RunningShoesCreateControllerRequestDto controllerRequestDto
     ) {
@@ -43,6 +49,12 @@ public class RunningShoesController {
             .status(HttpStatus.CREATED)
             .build();
     }
+
+    /**
+     * 러닝화 정보 전체 조회
+     *
+     * @return
+     */
 
     @GetMapping("")
     public ResponseEntity<List<RunningShoesReadServiceResponseDto>> readAll(
