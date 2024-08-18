@@ -10,6 +10,7 @@ import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesUp
 import com.swart.runwith.domain.running_shoes.dto.service.response.RunningShoesReadServiceResponseDto;
 import com.swart.runwith.domain.running_shoes.mapper.RunningShoesDtoMapper;
 import com.swart.runwith.domain.running_shoes.service.RunningShoesService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class RunningShoesController {
     @PostMapping("")
     public ResponseEntity<Void> create(
 //        @AuthenticationPrincipal UserDetails userDetails,
-        @RequestBody RunningShoesCreateControllerRequestDto controllerRequestDto
+        @Valid @RequestBody RunningShoesCreateControllerRequestDto controllerRequestDto
     ) {
         RunningShoesCreateServiceRequestDto serviceRequestDto =
             runningShoesDtoMapper.toRunningShoesCreateServiceRequestDto(controllerRequestDto);
