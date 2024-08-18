@@ -1,6 +1,7 @@
 package com.swart.runwith.domain.running_shoes.service.impl;
 
 import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesCreateServiceRequestDto;
+import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesUpdateServiceRequestDto;
 import com.swart.runwith.domain.running_shoes.dto.service.response.RunningShoesReadServiceResponseDto;
 import com.swart.runwith.domain.running_shoes.entity.RunningShoes;
 import com.swart.runwith.domain.running_shoes.exception.RunningShoesErrorCode;
@@ -73,11 +74,24 @@ public class RunningShoesServiceImpl implements RunningShoesService {
         UserInfo userInfo = testUserInfo();
         RunningShoes runningShoes = getRunningShoesById(shoesId);
 
-        if (!userInfo.equals(runningShoes.getUserInfo())) {
-            throw new RunningShoesException(RunningShoesErrorCode.FORBIDDEN_RUNNING_SHOES);
-        }
+        validateRunningShoesAccessAuthority(userInfo, runningShoes);
 
         return runningShoesEntityMapper.toRunningShoesReadServiceResponseDto(runningShoes);
+    }
+
+
+    @Override
+    @Transactional
+    public void update(
+//        final UserDetails userDetails,
+        final Long shoesId,
+        final RunningShoesUpdateServiceRequestDto serviceRequestDto) {
+        UserInfo userInfo = testUserInfo();
+        RunningShoes runningShoes = getRunningShoesById(shoesId);
+
+        validateRunningShoesAccessAuthority(userInfo, runningShoes);
+
+        runningShoes.update(serviceRequestDto);
     }
 
     private RunningShoes getRunningShoesById(final Long shoesId) {
@@ -85,5 +99,14 @@ public class RunningShoesServiceImpl implements RunningShoesService {
             .orElseThrow(
                 () -> new RunningShoesException(RunningShoesErrorCode.NOT_FOUND_RUNNING_SHOES)
             );
+    }
+
+    private void validateRunningShoesAccessAuthority(
+        final UserInfo userInfo,
+        final RunningShoes runningShoes
+    ) {
+        if (!userInfo.equals(runningShoes.getUserInfo())) {
+            throw new RunningShoesException(RunningShoesErrorCode.FORBIDDEN_RUNNING_SHOES);
+        }
     }
 }
