@@ -14,8 +14,6 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -101,9 +99,16 @@ public class RunningShoesController {
             .body(serviceResponseDto);
     }
 
+    /**
+     * 러닝화 정보 수정
+     *
+     * @param shoesId
+     * @param controllerRequestDto
+     * @return
+     */
     @PutMapping("/{shoes_id}")
     public ResponseEntity<Void> update(
-        @AuthenticationPrincipal UserDetails userDetails,
+//        @AuthenticationPrincipal UserDetails userDetails,
         @PathVariable(name = "shoes_id") Long shoesId,
         @NotNull @RequestBody RunningShoesUpdateControllerRequestDto controllerRequestDto
     ) {
