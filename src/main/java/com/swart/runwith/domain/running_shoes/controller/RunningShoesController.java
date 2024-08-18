@@ -15,6 +15,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -120,6 +121,21 @@ public class RunningShoesController {
 //            userDetails,
             shoesId,
             serviceRequestDto
+        );
+
+        return ResponseEntity
+            .status(OK)
+            .build();
+    }
+
+    @DeleteMapping("/{shoes_id}")
+    public ResponseEntity<Void> delete(
+//        @AuthenticationPrincipal UserDetails userDetails,
+        @PathVariable(name = "shoes_id") Long shoesId
+    ) {
+        runningShoesService.delete(
+//            userDetails,
+            shoesId
         );
 
         return ResponseEntity
