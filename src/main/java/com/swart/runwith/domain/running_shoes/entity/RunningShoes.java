@@ -1,5 +1,6 @@
-package com.swart.runwith.domain.user.entity;
+package com.swart.runwith.domain.running_shoes.entity;
 
+import com.swart.runwith.domain.user.entity.UserInfo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
