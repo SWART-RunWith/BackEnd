@@ -1,5 +1,7 @@
 package com.swart.runwith.domain.running_shoes.service.impl;
 
+import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesCreateServiceRequestDto;
+import com.swart.runwith.domain.running_shoes.entity.RunningShoes;
 import com.swart.runwith.domain.running_shoes.mapper.RunningShoesEntityMapper;
 import com.swart.runwith.domain.running_shoes.repository.RunningShoesRepository;
 import com.swart.runwith.domain.running_shoes.service.RunningShoesService;
@@ -9,6 +11,7 @@ import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +28,21 @@ public class RunningShoesServiceImpl implements RunningShoesService {
     private UserInfo testUserInfo() {
         return authRepository.findById(1L)
             .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_AUTH)).getUserInfo();
+    }
+
+    @Override
+    @Transactional
+    public void create(
+//        final UserDetails userDetails,
+        final RunningShoesCreateServiceRequestDto serviceRequestDto
+    ) {
+        UserInfo userInfo = testUserInfo();
+
+        RunningShoes runningShoes = runningShoesEntityMapper.toRunningShoes(
+            serviceRequestDto,
+            userInfo
+        );
+
+        runningShoesRepository.save(runningShoes);
     }
 }
