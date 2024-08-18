@@ -31,14 +31,8 @@ public class RunningShoes {
     String model;
     @Column
     int distance = 0;
-    @JoinColumn(
-        name = "user_info_id",
-        nullable = false
-    )
-    @ManyToOne(
-        fetch = FetchType.LAZY,
-        optional = false
-    )
+    @JoinColumn(name = "user_info_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     UserInfo userInfo;
 
     @Builder
