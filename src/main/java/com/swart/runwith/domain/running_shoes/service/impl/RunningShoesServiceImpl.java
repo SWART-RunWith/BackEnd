@@ -108,6 +108,12 @@ public class RunningShoesServiceImpl implements RunningShoesService {
         runningShoesRepository.delete(runningShoes);
     }
 
+    /**
+     * 러닝화 삭제
+     *
+     * @param shoesId
+     * @return
+     */
     private RunningShoes getRunningShoesById(final Long shoesId) {
         return runningShoesRepository.findById(shoesId)
             .orElseThrow(
