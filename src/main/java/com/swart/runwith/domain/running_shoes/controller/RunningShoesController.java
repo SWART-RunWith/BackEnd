@@ -2,11 +2,14 @@ package com.swart.runwith.domain.running_shoes.controller;
 
 import com.swart.runwith.domain.running_shoes.dto.controller.RunningShoesCreateControllerRequestDto;
 import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesCreateServiceRequestDto;
+import com.swart.runwith.domain.running_shoes.dto.service.response.RunningShoesReadServiceResponseDto;
 import com.swart.runwith.domain.running_shoes.mapper.RunningShoesDtoMapper;
 import com.swart.runwith.domain.running_shoes.service.RunningShoesService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,4 +44,17 @@ public class RunningShoesController {
             .build();
     }
 
+    @GetMapping("")
+    public ResponseEntity<List<RunningShoesReadServiceResponseDto>> readAll(
+//        @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        List<RunningShoesReadServiceResponseDto> serviceResponseDtoList =
+            runningShoesService.readAll(
+//            userDetails
+            );
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(serviceResponseDtoList);
+    }
 }
