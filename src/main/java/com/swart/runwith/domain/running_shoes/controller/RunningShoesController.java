@@ -4,16 +4,22 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.swart.runwith.domain.running_shoes.dto.controller.RunningShoesCreateControllerRequestDto;
+import com.swart.runwith.domain.running_shoes.dto.controller.RunningShoesUpdateControllerRequestDto;
 import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesCreateServiceRequestDto;
+import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesUpdateServiceRequestDto;
 import com.swart.runwith.domain.running_shoes.dto.service.response.RunningShoesReadServiceResponseDto;
 import com.swart.runwith.domain.running_shoes.mapper.RunningShoesDtoMapper;
 import com.swart.runwith.domain.running_shoes.service.RunningShoesService;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -93,5 +99,25 @@ public class RunningShoesController {
         return ResponseEntity
             .status(OK)
             .body(serviceResponseDto);
+    }
+
+    @PutMapping("/{shoes_id}")
+    public ResponseEntity<Void> update(
+        @AuthenticationPrincipal UserDetails userDetails,
+        @PathVariable(name = "shoes_id") Long shoesId,
+        @NotNull @RequestBody RunningShoesUpdateControllerRequestDto controllerRequestDto
+    ) {
+        RunningShoesUpdateServiceRequestDto serviceRequestDto =
+            runningShoesDtoMapper.toRunningShoesUpdateServiceRequestDto(controllerRequestDto);
+
+        runningShoesService.update(
+//            userDetails,
+            shoesId,
+            serviceRequestDto
+        );
+
+        return ResponseEntity
+            .status(OK)
+            .build();
     }
 }
