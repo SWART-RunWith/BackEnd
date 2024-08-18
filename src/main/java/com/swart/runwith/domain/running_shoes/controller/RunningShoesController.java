@@ -12,6 +12,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,5 +71,27 @@ public class RunningShoesController {
         return ResponseEntity
             .status(OK)
             .body(serviceResponseDtoList);
+    }
+
+    /**
+     * 러닝화 정보 단건 조회
+     *
+     * @param shoesId
+     * @return
+     */
+    @GetMapping("/{shoes_id}")
+    public ResponseEntity<RunningShoesReadServiceResponseDto> read(
+//        @AuthenticationPrincipal UserDetails userDetails,
+        @PathVariable(name = "shoes_id") Long shoesId
+    ) {
+        RunningShoesReadServiceResponseDto serviceResponseDto =
+            runningShoesService.read(
+//            userDetails,
+                shoesId
+            );
+
+        return ResponseEntity
+            .status(OK)
+            .body(serviceResponseDto);
     }
 }
