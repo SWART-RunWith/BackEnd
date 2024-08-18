@@ -3,6 +3,8 @@ package com.swart.runwith.domain.running_shoes.service.impl;
 import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesCreateServiceRequestDto;
 import com.swart.runwith.domain.running_shoes.dto.service.response.RunningShoesReadServiceResponseDto;
 import com.swart.runwith.domain.running_shoes.entity.RunningShoes;
+import com.swart.runwith.domain.running_shoes.exception.RunningShoesErrorCode;
+import com.swart.runwith.domain.running_shoes.exception.RunningShoesException;
 import com.swart.runwith.domain.running_shoes.mapper.RunningShoesEntityMapper;
 import com.swart.runwith.domain.running_shoes.repository.RunningShoesRepository;
 import com.swart.runwith.domain.running_shoes.service.RunningShoesService;
@@ -60,5 +62,28 @@ public class RunningShoesServiceImpl implements RunningShoesService {
             .stream()
             .map(runningShoesEntityMapper::toRunningShoesReadServiceResponseDto)
             .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RunningShoesReadServiceResponseDto read(
+//        final UserDetails userDetails,
+        final Long shoesId
+    ) {
+        UserInfo userInfo = testUserInfo();
+        RunningShoes runningShoes = getRunningShoesById(shoesId);
+
+        if (!userInfo.equals(runningShoes.getUserInfo())) {
+            throw new RunningShoesException(RunningShoesErrorCode.FORBIDDEN_RUNNING_SHOES);
+        }
+
+        return runningShoesEntityMapper.toRunningShoesReadServiceResponseDto(runningShoes);
+    }
+
+    private RunningShoes getRunningShoesById(final Long shoesId) {
+        return runningShoesRepository.findById(shoesId)
+            .orElseThrow(
+                () -> new RunningShoesException(RunningShoesErrorCode.NOT_FOUND_RUNNING_SHOES)
+            );
     }
 }

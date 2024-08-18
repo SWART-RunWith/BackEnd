@@ -14,4 +14,9 @@ public interface RunningShoesService {
     List<RunningShoesReadServiceResponseDto> readAll(
 //        UserDetails userDetails,
     );
+
+    RunningShoesReadServiceResponseDto read(
+//        UserDetails userDetails,
+        Long shoesId
+    );
 }
