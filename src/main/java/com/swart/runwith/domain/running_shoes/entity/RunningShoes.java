@@ -1,5 +1,7 @@
-package com.swart.runwith.domain.user.entity;
+package com.swart.runwith.domain.running_shoes.entity;
 
+import com.swart.runwith.domain.running_shoes.dto.service.request.RunningShoesUpdateServiceRequestDto;
+import com.swart.runwith.domain.user.entity.UserInfo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -46,5 +48,13 @@ public class RunningShoes {
         this.brand = brand;
         this.model = model;
         this.userInfo = userInfo;
+    }
+
+
+    public void update(final RunningShoesUpdateServiceRequestDto serviceRequestDto) {
+        this.nickname =
+            serviceRequestDto.nickname() != null ? serviceRequestDto.nickname() : this.nickname;
+        this.brand = serviceRequestDto.brand() != null ? serviceRequestDto.brand() : this.brand;
+        this.model = serviceRequestDto.model() != null ? serviceRequestDto.model() : this.model;
     }
 }

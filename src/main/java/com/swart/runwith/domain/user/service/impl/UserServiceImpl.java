@@ -11,7 +11,6 @@ import com.swart.runwith.domain.user.exception.UserErrorCode;
 import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.mapper.UserEntityMapper;
 import com.swart.runwith.domain.user.repository.AuthRepository;
-import com.swart.runwith.domain.user.repository.RunningShoesRepository;
 import com.swart.runwith.domain.user.repository.UserRepository;
 import com.swart.runwith.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,6 @@ public class UserServiceImpl implements UserService {
     // repository
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
-    private final RunningShoesRepository runningShoesRepository;
 
     // mapper
     private final UserEntityMapper userEntityMapper;
