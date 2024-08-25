@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.OK;
 import com.swart.runwith.domain.bookmark.service.BookmarkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +19,21 @@ public class BookmarkController {
     private final BookmarkService bookmarkService;
 
     @PostMapping("/courses/{course_id}/bookmark")
-    public ResponseEntity<?> create(
+    public ResponseEntity<Void> create(
         @PathVariable(name = "course_id") Long courseId
     ) {
         bookmarkService.create(courseId);
+
+        return ResponseEntity
+            .status(OK)
+            .build();
+    }
+
+    @DeleteMapping("/courses/{course_id}/bookmark")
+    public ResponseEntity<Void> delete(
+        @PathVariable(name = "course_id") Long courseId
+    ) {
+        bookmarkService.delete(courseId);
 
         return ResponseEntity
             .status(OK)
