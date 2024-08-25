@@ -1,6 +1,7 @@
 package com.swart.runwith.domain.course_post.service.impl;
 
 import com.swart.runwith.domain.course_post.dto.service.request.CoursePostCreateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.request.CoursePostUpdateServiceRequestDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.entity.CoursePost;
 import com.swart.runwith.domain.course_post.exception.CoursePostErrorCode;
@@ -92,6 +93,32 @@ public class CoursePostServiceImpl implements CoursePostService {
                 coursePost,
                 userInfo.getName()
             )).toList();
+    }
+
+    @Override
+    @Transactional
+    public void update(
+        final Long courseId,
+        final CoursePostUpdateServiceRequestDto serviceRequestDto
+    ) {
+        UserInfo userInfo = testUserInfo();
+        CoursePost coursePost = findById(courseId);
+
+        validAuthority(
+            userInfo,
+            coursePost
+        );
+
+        coursePost.update(serviceRequestDto);
+    }
+
+    private void validAuthority(
+        final UserInfo userInfo,
+        final CoursePost coursePost
+    ) {
+        if (!coursePost.getUserInfo().equals(userInfo)) {
+            throw new CoursePostException(CoursePostErrorCode.UNAUTHORIZED);
+        }
     }
 
     private CoursePost findById(final Long courseId) {
