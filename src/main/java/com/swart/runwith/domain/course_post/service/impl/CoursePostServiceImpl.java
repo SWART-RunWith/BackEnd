@@ -59,7 +59,7 @@ public class CoursePostServiceImpl implements CoursePostService {
     @Override
     @Transactional(readOnly = true)
     public CoursePostReadServiceResponseDto read(final Long courseId) {
-        CoursePost coursePost = findById(courseId);
+        CoursePost coursePost = getCoursePostById(courseId);
 
         return coursePostEntityMapper.toCoursePostReadServiceResponseDto(
             coursePost,
@@ -102,7 +102,7 @@ public class CoursePostServiceImpl implements CoursePostService {
         final CoursePostUpdateServiceRequestDto serviceRequestDto
     ) {
         UserInfo userInfo = testUserInfo();
-        CoursePost coursePost = findById(courseId);
+        CoursePost coursePost = getCoursePostById(courseId);
 
         validAuthority(
             userInfo,
@@ -116,7 +116,7 @@ public class CoursePostServiceImpl implements CoursePostService {
     @Transactional
     public void delete(final Long courseId) {
         UserInfo userInfo = testUserInfo();
-        CoursePost coursePost = findById(courseId);
+        CoursePost coursePost = getCoursePostById(courseId);
 
         validAuthority(
             userInfo,
@@ -135,7 +135,7 @@ public class CoursePostServiceImpl implements CoursePostService {
         }
     }
 
-    private CoursePost findById(final Long courseId) {
+    private CoursePost getCoursePostById(final Long courseId) {
         return coursePostRepository.findById(courseId)
             .orElseThrow(() -> new CoursePostException(CoursePostErrorCode.NOT_FOUND_COURSE_POST));
     }
