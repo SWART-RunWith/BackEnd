@@ -53,6 +53,28 @@ public class BookmarkServiceImpl implements BookmarkService {
         bookmarkRepository.save(bookmark);
     }
 
+    @Override
+    @Transactional
+    public void delete(final Long courseId) {
+        UserInfo userInfo = testUserInfo();
+        CoursePost coursePost = getCoursePostById(courseId);
+
+        Bookmark bookmark = getBookmarkByUserInfoAndCoursePost(
+            userInfo,
+            coursePost
+        );
+
+        bookmarkRepository.delete(bookmark);
+    }
+
+    private Bookmark getBookmarkByUserInfoAndCoursePost(
+        final UserInfo userInfo,
+        final CoursePost coursePost
+    ) {
+        return bookmarkRepository.findByUserInfoAndCoursePost(userInfo, coursePost)
+            .orElseThrow(() -> new BookmarkException(BookmarkErrorCode.NOT_FOUND_BOOKMARK));
+    }
+
     private void checkExistBookmark(
         final UserInfo userInfo,
         final CoursePost coursePost
