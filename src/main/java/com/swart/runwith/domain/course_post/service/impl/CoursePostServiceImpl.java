@@ -112,6 +112,20 @@ public class CoursePostServiceImpl implements CoursePostService {
         coursePost.update(serviceRequestDto);
     }
 
+    @Override
+    @Transactional
+    public void delete(final Long courseId) {
+        UserInfo userInfo = testUserInfo();
+        CoursePost coursePost = findById(courseId);
+
+        validAuthority(
+            userInfo,
+            coursePost
+        );
+
+        coursePostRepository.delete(coursePost);
+    }
+
     private void validAuthority(
         final UserInfo userInfo,
         final CoursePost coursePost

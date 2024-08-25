@@ -24,4 +24,6 @@ public interface CoursePostService {
         Long courseId,
         CoursePostUpdateServiceRequestDto serviceRequestDto
     );
+
+    void delete(Long courseId);
 }
