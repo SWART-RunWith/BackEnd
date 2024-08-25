@@ -1,5 +1,8 @@
 package com.swart.runwith.domain.bookmark.service.impl;
 
+import com.swart.runwith.domain.bookmark.entity.Bookmark;
+import com.swart.runwith.domain.bookmark.exception.BookmarkErrorCode;
+import com.swart.runwith.domain.bookmark.exception.BookmarkException;
 import com.swart.runwith.domain.bookmark.repository.BookmarkRepository;
 import com.swart.runwith.domain.bookmark.service.BookmarkService;
 import com.swart.runwith.domain.course_post.entity.CoursePost;
@@ -13,6 +16,7 @@ import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +35,34 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     private UserInfo testUserInfo() {
         return testAuth().getUserInfo();
+    }
+
+    @Override
+    @Transactional
+    public void create(final Long courseId) {
+        UserInfo userInfo = testUserInfo();
+        CoursePost coursePost = getCoursePostById(courseId);
+
+        checkExistBookmark(userInfo, coursePost);
+
+        Bookmark bookmark = Bookmark.builder()
+            .userInfo(userInfo)
+            .coursePost(coursePost)
+            .build();
+
+        bookmarkRepository.save(bookmark);
+    }
+
+    private void checkExistBookmark(
+        final UserInfo userInfo,
+        final CoursePost coursePost
+    ) {
+        bookmarkRepository.findByUserInfoAndCoursePost(
+            userInfo,
+            coursePost
+        ).ifPresent(b -> {
+            throw new BookmarkException(BookmarkErrorCode.ALREADY_BOOKMARK);
+        });
     }
 
     private CoursePost getCoursePostById(final Long courseId) {
