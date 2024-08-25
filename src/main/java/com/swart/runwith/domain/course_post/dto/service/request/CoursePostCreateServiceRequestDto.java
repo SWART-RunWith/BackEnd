@@ -1,4 +1,4 @@
-package com.swart.runwith.domain.course_post.dto.service;
+package com.swart.runwith.domain.course_post.dto.service.request;
 
 public record CoursePostCreateServiceRequestDto(
     String title,

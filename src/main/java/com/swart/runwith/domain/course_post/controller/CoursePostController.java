@@ -4,7 +4,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
 import com.swart.runwith.domain.course_post.dto.controller.CoursePostCreateControllerRequestDto;
-import com.swart.runwith.domain.course_post.dto.service.CoursePostCreateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.request.CoursePostCreateServiceRequestDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.mapper.CoursePostDtoMapper;
 import com.swart.runwith.domain.course_post.service.CoursePostService;
