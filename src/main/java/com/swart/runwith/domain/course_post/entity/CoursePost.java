@@ -1,5 +1,6 @@
 package com.swart.runwith.domain.course_post.entity;
 
+import com.swart.runwith.domain.course_post.dto.service.request.CoursePostUpdateServiceRequestDto;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,5 +50,11 @@ public class CoursePost {
         this.title = title;
         this.content = content;
         this.userInfo = userInfo;
+    }
+
+    public void update(final CoursePostUpdateServiceRequestDto serviceRequestDto) {
+        this.title = serviceRequestDto.title();
+        this.content = serviceRequestDto.content();
+        // 러닝 데이터
     }
 }
