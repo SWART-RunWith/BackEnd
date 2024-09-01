@@ -2,6 +2,7 @@ package com.swart.runwith.domain.user.entity;
 
 import com.swart.runwith.enums.UserRole;
 import com.swart.runwith.global.converter.UserRoleConverter;
+import com.swart.runwith.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -26,7 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Auth implements UserDetails {
+public class Auth extends BaseEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

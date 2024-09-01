@@ -2,6 +2,7 @@ package com.swart.runwith.domain.user.entity;
 
 import com.swart.runwith.domain.user.dto.service.request.UserUpdateServiceRequestDto;
 import com.swart.runwith.enums.Gender;
+import com.swart.runwith.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserInfo {
+public class UserInfo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
