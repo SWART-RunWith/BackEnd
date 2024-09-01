@@ -1,6 +1,7 @@
 package com.swart.runwith.domain.bookmark.service.impl;
 
-import com.swart.runwith.domain.bookmark.entity.Bookmark;
+import com.swart.runwith.domain.bookmark.dto.service.request.PostBookmarkCreateServiceRequestDto;
+import com.swart.runwith.domain.bookmark.entity.PostBookmark;
 import com.swart.runwith.domain.bookmark.exception.BookmarkErrorCode;
 import com.swart.runwith.domain.bookmark.exception.BookmarkException;
 import com.swart.runwith.domain.bookmark.repository.PostBookmarkRepository;
@@ -14,6 +15,7 @@ import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;
 import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.repository.AuthRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,18 +41,23 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     @Transactional
-    public void createPostBookmark(final Long courseId) {
+    public void createPostBookmark(
+        final Long courseId,
+        @Valid final PostBookmarkCreateServiceRequestDto serviceRequestDto
+    ) {
         UserInfo userInfo = testUserInfo();
         CoursePost coursePost = getCoursePostById(courseId);
 
         checkExistBookmark(userInfo, coursePost);
 
-        Bookmark bookmark = Bookmark.builder()
+        // To Do : folder 추가
+        PostBookmark postBookmark = PostBookmark.builder()
             .userInfo(userInfo)
             .coursePost(coursePost)
+            .title(serviceRequestDto.title())
             .build();
 
-        postBookmarkRepository.save(bookmark);
+        postBookmarkRepository.save(postBookmark);
     }
 
     @Override
@@ -59,15 +66,15 @@ public class BookmarkServiceImpl implements BookmarkService {
         UserInfo userInfo = testUserInfo();
         CoursePost coursePost = getCoursePostById(courseId);
 
-        Bookmark bookmark = getBookmarkByUserInfoAndCoursePost(
+        PostBookmark postBookmark = getBookmarkByUserInfoAndCoursePost(
             userInfo,
             coursePost
         );
 
-        postBookmarkRepository.delete(bookmark);
+        postBookmarkRepository.delete(postBookmark);
     }
 
-    private Bookmark getBookmarkByUserInfoAndCoursePost(
+    private PostBookmark getBookmarkByUserInfoAndCoursePost(
         final UserInfo userInfo,
         final CoursePost coursePost
     ) {
