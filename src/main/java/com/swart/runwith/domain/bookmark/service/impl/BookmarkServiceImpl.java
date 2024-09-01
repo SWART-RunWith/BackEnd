@@ -3,7 +3,7 @@ package com.swart.runwith.domain.bookmark.service.impl;
 import com.swart.runwith.domain.bookmark.entity.Bookmark;
 import com.swart.runwith.domain.bookmark.exception.BookmarkErrorCode;
 import com.swart.runwith.domain.bookmark.exception.BookmarkException;
-import com.swart.runwith.domain.bookmark.repository.BookmarkRepository;
+import com.swart.runwith.domain.bookmark.repository.PostBookmarkRepository;
 import com.swart.runwith.domain.bookmark.service.BookmarkService;
 import com.swart.runwith.domain.course_post.entity.CoursePost;
 import com.swart.runwith.domain.course_post.exception.CoursePostErrorCode;
@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookmarkServiceImpl implements BookmarkService {
 
     private final AuthRepository authRepository;
-    private final BookmarkRepository bookmarkRepository;
+    private final PostBookmarkRepository postBookmarkRepository;
     private final CoursePostRepository coursePostRepository;
 
     // token 작업 전에 사용할 test auth & user
@@ -39,7 +39,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     @Transactional
-    public void create(final Long courseId) {
+    public void createPostBookmark(final Long courseId) {
         UserInfo userInfo = testUserInfo();
         CoursePost coursePost = getCoursePostById(courseId);
 
@@ -50,12 +50,12 @@ public class BookmarkServiceImpl implements BookmarkService {
             .coursePost(coursePost)
             .build();
 
-        bookmarkRepository.save(bookmark);
+        postBookmarkRepository.save(bookmark);
     }
 
     @Override
     @Transactional
-    public void delete(final Long courseId) {
+    public void deletePostBookmark(final Long courseId) {
         UserInfo userInfo = testUserInfo();
         CoursePost coursePost = getCoursePostById(courseId);
 
@@ -64,14 +64,14 @@ public class BookmarkServiceImpl implements BookmarkService {
             coursePost
         );
 
-        bookmarkRepository.delete(bookmark);
+        postBookmarkRepository.delete(bookmark);
     }
 
     private Bookmark getBookmarkByUserInfoAndCoursePost(
         final UserInfo userInfo,
         final CoursePost coursePost
     ) {
-        return bookmarkRepository.findByUserInfoAndCoursePost(userInfo, coursePost)
+        return postBookmarkRepository.findByUserInfoAndCoursePost(userInfo, coursePost)
             .orElseThrow(() -> new BookmarkException(BookmarkErrorCode.NOT_FOUND_BOOKMARK));
     }
 
@@ -79,7 +79,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         final UserInfo userInfo,
         final CoursePost coursePost
     ) {
-        bookmarkRepository.findByUserInfoAndCoursePost(
+        postBookmarkRepository.findByUserInfoAndCoursePost(
             userInfo,
             coursePost
         ).ifPresent(b -> {

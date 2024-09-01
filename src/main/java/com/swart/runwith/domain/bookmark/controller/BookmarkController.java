@@ -12,31 +12,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/bookmarks")
 @RequiredArgsConstructor
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;
 
-    @PostMapping("/courses/{course_id}/bookmark")
-    public ResponseEntity<Void> create(
+    /**
+     * 공통
+     */
+
+    /**
+     * 코스 공유글 북마크
+     */
+    @PostMapping("/courses/{course_id}")
+    public ResponseEntity<Void> createPostBookmark(
         @PathVariable(name = "course_id") Long courseId
     ) {
-        bookmarkService.create(courseId);
+        bookmarkService.createPostBookmark(courseId);
 
         return ResponseEntity
             .status(OK)
             .build();
     }
 
-    @DeleteMapping("/courses/{course_id}/bookmark")
-    public ResponseEntity<Void> delete(
+    @DeleteMapping("/courses/{course_id}")
+    public ResponseEntity<Void> deletePostBookmark(
         @PathVariable(name = "course_id") Long courseId
     ) {
-        bookmarkService.delete(courseId);
+        bookmarkService.deletePostBookmark(courseId);
 
         return ResponseEntity
             .status(OK)
             .build();
     }
+
+    /**
+     * 개인 코스 북마크
+     */
 }
