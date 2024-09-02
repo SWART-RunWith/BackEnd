@@ -1,6 +1,7 @@
 package com.swart.runwith.domain.bookmark.entity;
 
 import com.swart.runwith.domain.user.entity.UserInfo;
+import com.swart.runwith.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Getter
 @MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class Bookmark {
+public abstract class Bookmark extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,6 +2,7 @@ package com.swart.runwith.domain.course_post.entity;
 
 import com.swart.runwith.domain.course_post.dto.service.request.CoursePostUpdateServiceRequestDto;
 import com.swart.runwith.domain.user.entity.UserInfo;
+import com.swart.runwith.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CoursePost {
+public class CoursePost extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
