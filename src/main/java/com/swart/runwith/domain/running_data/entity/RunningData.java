@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -29,8 +30,10 @@ public class RunningData extends BaseEntity {
     Long id;
     //    다른 테이블이랑 연관 관계를 사용할 때는 OneToMany, ManyToMany 등 연관 관계 어노테이션 사용해야 함
 //    여기서는 회원, 러닝화 등이 연관 관계 매핑
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     UserInfo userInfo; // 회원
+    @ManyToOne
     @JoinColumn(name = "running_shoes")
     RunningShoes runningShoes; // 러닝화
     @Column
@@ -59,11 +62,11 @@ public class RunningData extends BaseEntity {
         this.courseUrl = courseUrl;
     }
     
-    public void update(final RunningDataUpdateServiceRequestDto serviceRequestDto, RunningShoes runningShoes) {
-        this.runningShoes = runningShoes;
-        this.distance = serviceRequestDto.distance();
-        this.time = serviceRequestDto.time();
-        this.averagePace = serviceRequestDto.averagePace();
-        this.courseUrl = serviceRequestDto.courseUrl();
-    }
+//    public void update(final RunningDataUpdateServiceRequestDto serviceRequestDto, RunningShoes runningShoes) {
+//        this.runningShoes = runningShoes;
+//        this.distance = serviceRequestDto.distance();
+//        this.time = serviceRequestDto.time();
+//        this.averagePace = serviceRequestDto.averagePace();
+//        this.courseUrl = serviceRequestDto.courseUrl();
+//    }
 }
