@@ -14,14 +14,6 @@ public interface RunningDataService {
         RunningDataCreateServiceRequestDto serviceRequestDto
     );
     
-    void createFolder(
-        RunningDataCreateServiceRequestDto serviceRequestDto
-    );
-    
-    List<RunningDataReadServiceResponseDto> readFolder(
-//        Long runningDataFolderId
-    );
-    
     List<RunningDataReadServiceResponseDto> readAll(
 //        UserDetails userDetails
     );
@@ -35,16 +27,7 @@ public interface RunningDataService {
         RunningDataUpdateServiceRequestDto serviceRequestDto
     );
     
-    void updateFolder(
-        Long runningDataFolderId,
-        RunningDataUpdateServiceRequestDto serviceRequestDto
-    );
-    
     void delete(
         Long runningDataId
-    );
-    
-    void deleteFolder(
-        Long runningDataFolderId
     );
 }

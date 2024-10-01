@@ -47,22 +47,6 @@ public class RunningDataController {
             .build();
     }
     
-    @PostMapping
-    public ResponseEntity<Void> createFolder(
-        @Valid @RequestBody RunningDataCreateControllerRequestDto controllerRequestDto
-    ) {
-        RunningDataCreateServiceRequestDto serviceRequestDto = runningDataDtoMapper.toRunningDataCreateServiceRequestDto(
-            controllerRequestDto);
-        
-        runningDataService.create(
-            serviceRequestDto
-        );
-        
-        return ResponseEntity
-            .status(CREATED)
-            .build();
-    }
-    
     @GetMapping("")
     public ResponseEntity<List<RunningDataReadServiceResponseDto>> readAll(
     
@@ -75,20 +59,6 @@ public class RunningDataController {
     return ResponseEntity
         .status(OK)
         .body(serviceResponseDtoList);
-    }
-    
-    @GetMapping("/{folder_id}")
-    public ResponseEntity<List<RunningDataReadServiceResponseDto>> readFolder(
-    
-    ) {
-        List<RunningDataReadServiceResponseDto> serviceResponseDtoList =
-            runningDataService.readFolder(
-            
-            );
-        
-        return ResponseEntity
-            .status(OK)
-            .body(serviceResponseDtoList);
     }
     
     @GetMapping("/{data_id}")
