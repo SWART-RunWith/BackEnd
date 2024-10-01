@@ -9,18 +9,12 @@ import com.swart.runwith.domain.running_data.exception.RunningDataException;
 import com.swart.runwith.domain.running_data.mapper.RunningDataEntityMapper;
 import com.swart.runwith.domain.running_data.repository.RunningDataRepository;
 import com.swart.runwith.domain.running_data.service.RunningDataService;
-import com.swart.runwith.domain.running_shoes.exception.RunningShoesErrorCode;
-import com.swart.runwith.domain.running_shoes.exception.RunningShoesException;
-import com.swart.runwith.domain.user.entity.Auth;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.domain.user.exception.UserErrorCode;
 import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.repository.AuthRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl.Use;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +24,6 @@ public class RunningDataServiceImpl implements RunningDataService {
     
     private final RunningDataRepository runningDataRepository;
     private final AuthRepository authRepository;
-    
     private final RunningDataEntityMapper runningDataEntityMapper;
     
     private UserInfo testUserInfo() {
@@ -44,7 +37,7 @@ public class RunningDataServiceImpl implements RunningDataService {
     ) {
         UserInfo userInfo = testUserInfo();
         
-        RunningData runningData = runningDataEntityMapper.toRunningData((
+        RunningData runningData = runningDataEntityMapper.toRunningData(
             serviceRequestDto,
             userInfo
         );
@@ -74,8 +67,6 @@ public class RunningDataServiceImpl implements RunningDataService {
         UserInfo userInfo = testUserInfo();
         RunningData runningData = getRunningDataById(runningDataId);
         
-        validateRunningDataAccessAuthority(userInfo, runningData);
-        
         return runningDataEntityMapper.toRunningDataReadServiceResponseDto(runningData);
     }
     
@@ -88,8 +79,6 @@ public class RunningDataServiceImpl implements RunningDataService {
         UserInfo userInfo = testUserInfo();
         RunningData runningData = getRunningDataById(runningDataId);
         
-        validateRunningDataAccessAuthority(userInfo, runningData);
-        
         runningData.update(serviceRequestDto);
     }
     
@@ -101,26 +90,14 @@ public class RunningDataServiceImpl implements RunningDataService {
         UserInfo userInfo = testUserInfo();
         RunningData runningData = getRunningDataById(runningDataId);
         
-        validateRunningDataAccessAuthority(userInfo, runningData);
-        
         runningDataRepository.delete(runningData);
     }
     
     private RunningData getRunningDataById(final Long runningDataId) {
         return runningDataRepository.findById(runningDataId)
             .orElseThrow(
-                () -> new RunningShoesException(RunningShoesErrorCode.NOT_FOUND_RUNNING_DATA
+                () -> new RunningDataException(RunningDataErrorCode.NOT_FOUND_RUNNING_DATA
             )
         );
-    }
-    
-    private void validateRunningDataAccessAuthority(
-        final UserInfo userInfo,
-        final RunningData runningData
-    ) {
-        if (!userInfo.equals(runningData.getUserInfo())) {
-            throw new RunningDataException(RunningDataErrorCode.FORBIDDEN_RUNNING_DATA
-            );
-        }
     }
 }
