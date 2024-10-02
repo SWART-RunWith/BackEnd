@@ -1,5 +1,6 @@
 package com.swart.runwith.domain.bookmark.entity;
 
+import com.swart.runwith.domain.folder.entity.Folder;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.global.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -23,16 +24,15 @@ public abstract class Bookmark extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    protected Long id;
     @JoinColumn(name = "user_info_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    UserInfo userInfo;
-    // To Do : 폴더 작성
-//    @JoinColumn(name = "folder_id", nullable = false)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    Folder folder;
+    protected UserInfo userInfo;
+    @JoinColumn(name = "folder_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    protected Folder folder;
     @Column
-    String title;
+    protected String title;
 }
