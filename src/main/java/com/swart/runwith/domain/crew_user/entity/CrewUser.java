@@ -1,38 +1,49 @@
-package com.swart.runwith.domain.bookmark.entity;
+package com.swart.runwith.domain.crew_user.entity;
 
-import com.swart.runwith.domain.folder.entity.Folder;
+import com.swart.runwith.domain.crew.entity.Crew;
 import com.swart.runwith.domain.user.entity.UserInfo;
-import com.swart.runwith.global.entity.BaseEntity;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
+@Table
+@Entity
 @Getter
-@MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class Bookmark extends BaseEntity {
+public class CrewUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
-    @JoinColumn(name = "user_info_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    protected UserInfo userInfo;
-    @JoinColumn(name = "folder_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    protected Folder folder;
+    private Long id;
     @Column
-    protected String title;
+    private boolean permission = true;
+    @Column
+    private int role = 0;
+    @JoinColumn(name = "user_info_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private UserInfo userInfo;
+    @JoinColumn(name = "crew_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Crew crew;
+
+    public CrewUser(
+        final boolean permission,
+        final int role,
+        final UserInfo userInfo,
+        final Crew crew
+    ) {
+        this.permission = permission;
+        this.role = role;
+        this.userInfo = userInfo;
+        this.crew = crew;
+    }
 }
