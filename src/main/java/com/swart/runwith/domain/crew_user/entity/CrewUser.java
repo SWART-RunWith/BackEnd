@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,6 +36,7 @@ public class CrewUser {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Crew crew;
 
+    @Builder
     public CrewUser(
         final boolean permission,
         final int role,
