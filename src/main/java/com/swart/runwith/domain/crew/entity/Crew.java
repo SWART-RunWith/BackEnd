@@ -1,7 +1,7 @@
 package com.swart.runwith.domain.crew.entity;
 
 import com.swart.runwith.domain.location.entity.Location;
-import com.swart.runwith.domain.notice_event.entity.NoticeEvent;
+import com.swart.runwith.domain.notice.entity.NoticeEvent;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
