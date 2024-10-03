@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CoursePostRepository extends JpaRepository<CoursePost, Long> {
 
     List<CoursePost> findByUserInfo(UserInfo userInfo);
+
+    List<CoursePost> findByTitleContaining(String title);
 }

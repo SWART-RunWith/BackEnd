@@ -7,6 +7,7 @@ import com.swart.runwith.domain.course_post.dto.controller.CoursePostCreateContr
 import com.swart.runwith.domain.course_post.dto.controller.CoursePostUpdateControllerRequestDto;
 import com.swart.runwith.domain.course_post.dto.service.request.CoursePostCreateServiceRequestDto;
 import com.swart.runwith.domain.course_post.dto.service.request.CoursePostUpdateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.response.CoursePostPreviewServiceResponseDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.mapper.CoursePostDtoMapper;
 import com.swart.runwith.domain.course_post.service.CoursePostService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -77,6 +79,13 @@ public class CoursePostController {
             .body(coursePostService.readMine(
 //                userDetails
             ));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CoursePostPreviewServiceResponseDto>> searchByTitle(
+        @RequestParam(name = "title") String title
+    ) {
+        return ResponseEntity.ok(coursePostService.searchByTitle(title));
     }
 
     @PutMapping("/{course_id}")

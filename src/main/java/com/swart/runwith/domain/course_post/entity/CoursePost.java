@@ -1,6 +1,8 @@
 package com.swart.runwith.domain.course_post.entity;
 
 import com.swart.runwith.domain.course_post.dto.service.request.CoursePostUpdateServiceRequestDto;
+import com.swart.runwith.domain.location.entity.Location;
+import com.swart.runwith.domain.running_data.entity.RunningData;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import com.swart.runwith.global.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -11,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,9 +35,10 @@ public class CoursePost extends BaseEntity {
     String content;
     @Column
     Long likeCount = 0L;
-    // 러닝 데이터 & 코스 추가
-    // @OneToOne
-    // RunningData runningData;
+    @OneToOne
+    RunningData runningData;
+    @ManyToOne
+    Location location;
     @JoinColumn(name = "user_info_id")
     @ManyToOne(
         fetch = FetchType.LAZY,
@@ -46,10 +50,16 @@ public class CoursePost extends BaseEntity {
     public CoursePost(
         final String title,
         final String content,
+        final Long likeCount,
+        final Location location,
+        final RunningData runningData,
         final UserInfo userInfo
     ) {
         this.title = title;
         this.content = content;
+        this.likeCount = likeCount;
+        this.location = location;
+        this.runningData = runningData;
         this.userInfo = userInfo;
     }
 

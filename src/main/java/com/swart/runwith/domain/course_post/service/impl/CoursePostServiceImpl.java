@@ -2,6 +2,7 @@ package com.swart.runwith.domain.course_post.service.impl;
 
 import com.swart.runwith.domain.course_post.dto.service.request.CoursePostCreateServiceRequestDto;
 import com.swart.runwith.domain.course_post.dto.service.request.CoursePostUpdateServiceRequestDto;
+import com.swart.runwith.domain.course_post.dto.service.response.CoursePostPreviewServiceResponseDto;
 import com.swart.runwith.domain.course_post.dto.service.response.CoursePostReadServiceResponseDto;
 import com.swart.runwith.domain.course_post.entity.CoursePost;
 import com.swart.runwith.domain.course_post.exception.CoursePostErrorCode;
@@ -15,6 +16,7 @@ import com.swart.runwith.domain.user.exception.UserErrorCode;
 import com.swart.runwith.domain.user.exception.UserException;
 import com.swart.runwith.domain.user.repository.AuthRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -93,6 +95,24 @@ public class CoursePostServiceImpl implements CoursePostService {
                 coursePost,
                 userInfo.getName()
             )).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CoursePostPreviewServiceResponseDto> searchByTitle(final String title) {
+        return coursePostRepository.findByTitleContaining(title).stream().map(
+            coursePost -> {
+                return CoursePostPreviewServiceResponseDto.builder()
+                    .id(coursePost.getId())
+                    .time(coursePost.getRunningData().getTime())
+                    .title(coursePost.getTitle())
+                    .name(coursePost.getUserInfo().getName())
+                    .distance(coursePost.getRunningData().getDistance())
+                    .location(coursePost.getLocation().getLocation())
+                    .content(coursePost.getContent())
+                    .routeImage("")
+                    .build();
+            }).collect(Collectors.toList());
     }
 
     @Override
