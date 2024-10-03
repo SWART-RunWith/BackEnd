@@ -10,7 +10,7 @@ public record RunningDataCreateControllerRequestDto(
     @NotNull
     Integer time,
     @NotNull
-    Float averagePace,
+    String averagePace,
     @NotNull
     String courseUrl
 ) {

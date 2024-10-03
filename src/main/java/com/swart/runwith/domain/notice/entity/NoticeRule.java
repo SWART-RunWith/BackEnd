@@ -1,6 +1,6 @@
 package com.swart.runwith.domain.notice.entity;
 
-import com.swart.runwith.domain.crew_user.entity.CrewUser;
+import com.swart.runwith.domain.crew.entity.CrewUser;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;

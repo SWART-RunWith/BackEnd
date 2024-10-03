@@ -1,6 +1,6 @@
 package com.swart.runwith.domain.blaclist.entity;
 
-import com.swart.runwith.domain.crew_user.entity.CrewUser;
+import com.swart.runwith.domain.crew.entity.CrewUser;
 import com.swart.runwith.domain.user.entity.UserInfo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

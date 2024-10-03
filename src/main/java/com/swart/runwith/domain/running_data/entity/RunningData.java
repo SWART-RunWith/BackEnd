@@ -32,7 +32,7 @@ public class RunningData extends BaseEntity {
     @Column
     Integer time = 0;
     @Column
-    Float averagePace = 0.0F;
+    String averagePace;
     @Column
     String course_url;
     @JoinColumn(name = "user_info_id", nullable = false)
@@ -43,7 +43,7 @@ public class RunningData extends BaseEntity {
     public RunningData(
         final Integer distance,
         final Integer time,
-        final Float averagePace,
+        final String averagePace,
         final String course_url,
         final UserInfo userInfo
     ) {
@@ -59,7 +59,7 @@ public class RunningData extends BaseEntity {
             serviceRequestDto.distance() != null ? serviceRequestDto.distance() : 0;
         this.time = serviceRequestDto.time() != null ? serviceRequestDto.time() : 0;
         this.averagePace =
-            serviceRequestDto.averagePace() != null ? serviceRequestDto.averagePace() : 0.0F;
+            serviceRequestDto.averagePace() != null ? serviceRequestDto.averagePace() : "0\'00\"";
         this.course_url =
             serviceRequestDto.courseUrl() != null ? serviceRequestDto.courseUrl() : this.course_url;
     }

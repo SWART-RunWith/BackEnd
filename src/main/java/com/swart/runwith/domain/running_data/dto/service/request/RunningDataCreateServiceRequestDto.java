@@ -4,7 +4,7 @@ public record RunningDataCreateServiceRequestDto(
     Long runningShoesId,
     Integer distance,
     Integer time,
-    Float averagePace,
+    String averagePace,
     String courseUrl
 ) {
 
